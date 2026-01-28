@@ -1,0 +1,10 @@
+import { createFetchHandler } from '@hypequery/serve';
+import { api } from '@/analytics/queries';
+
+export const runtime = 'nodejs';
+
+const handler = createFetchHandler(api.handler);
+
+export const GET = handler;
+export const POST = handler;
+export const OPTIONS = handler;
