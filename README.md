@@ -1,19 +1,12 @@
-# hypequery Examples
+# hypequery examples
 
-## The type-safe analytics runtime for ClickHouse. Define metrics once, execute them anywhere (inline, HTTP, React, agents), and keep everything backed by your ClickHouse schema.
+### The type-safe analytics backend for ClickHouse. Define metrics once, execute them anywhere (inline, HTTP, React, agents), and keep everything backed by your ClickHouse schema.
 
 <p align="center">
   <a href="https://hypequery.com/docs">Docs</a> •
   <a href="https://hypequery.featurebase.app/roadmap">Roadmap</a> •
   <a href="https://github.com/hypequery/hypequery-examples">Examples</a>
 </p>
-
-<p align="center">
-[![GitHub stars](https://img.shields.io/github/stars/hypequery/hypequery)](https://github.com/hypequery/hypequery/stargazers)
-[![Twitter Follow](https://img.shields.io/twitter/follow/hypequery?style=social)](https://twitter.com/hypequery)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-</p>
-
 
 Collection of examples demonstrating how to use [hypequery](https://github.com/hypequery/hypequery) with different frameworks and architectures for building type-safe analytics applications with ClickHouse.
 
