@@ -1,8 +1,8 @@
 import { initServe } from '@hypequery/serve';
-import { z } from 'zod';
 import { db } from './client';
 
 const serve = initServe({
+  basePath: '',
   context: () => ({ db }),
 });
 const { query } = serve;
@@ -15,11 +15,13 @@ export const api = serve.define({
         ctx.db
           .table('trips')
           .select('*')
-          .limit(10)
+          .limit(1)
           .execute()
       ),
   }),
 });
+
+api.route('/tripsQuery', api.queries.tripsQuery)
 
 /**
  * Inline usage example:

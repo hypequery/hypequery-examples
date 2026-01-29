@@ -3,7 +3,4 @@ import type { ApiDefinition } from '../../api/queries'
 
 export const { useQuery, useMutation } = createHooks<ApiDefinition>({
   baseUrl: '/api',
-  config: {
-    weeklyRevenue: { method: 'POST' },
-  },
 })

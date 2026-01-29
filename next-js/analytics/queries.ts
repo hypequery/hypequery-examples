@@ -1,7 +1,7 @@
 import { formatDateTime } from '@hypequery/clickhouse';
 import { initServe } from '@hypequery/serve';
 import { z } from 'zod';
-import db from './client';
+import { db } from './client';
 
 const { define, queries, query } = initServe({
   context: () => ({ db }),

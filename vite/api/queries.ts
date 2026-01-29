@@ -1,17 +1,9 @@
 import 'dotenv/config';
-import { initServe } from '@hypequery/serve';
-import { createQueryBuilder } from '@hypequery/clickhouse';
+import { InferApiType, initServe } from '@hypequery/serve';
 import { z } from 'zod';
 
-const db = createQueryBuilder({
-  url: process.env.CLICKHOUSE_HOST,
-  username: process.env.CLICKHOUSE_USERNAME,
-  password: process.env.CLICKHOUSE_PASSWORD,
-  database: process.env.CLICKHOUSE_DATABASE,
-});
-
 const { define, queries, query } = initServe({
-  context: () => ({ db }),
+  context: () => ({}),
 });
 
 export const api = define({
@@ -26,6 +18,6 @@ export const api = define({
   }),
 });
 
-api.route('/hello', api.queries.hello, { method: 'GET' })
+api.route('/hello', api.queries.hello, { method: 'POST' })
 
-export API
+export type ApiDefinition = InferApiType<typeof api>
