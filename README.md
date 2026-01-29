@@ -1,5 +1,7 @@
 # hypequery Examples
 
+## The type-safe analytics runtime for ClickHouse. Define metrics once, execute them anywhere (inline, HTTP, React, agents), and keep everything backed by your ClickHouse schema.
+
 <p align="center">
   <a href="https://hypequery.com/docs">Docs</a> •
   <a href="https://hypequery.featurebase.app/roadmap">Roadmap</a> •
@@ -13,7 +15,7 @@
 </p>
 
 
-Collection of examples demonstrating how to use [Hypequery](https://github.com/hypequery/hypequery) with different frameworks and architectures for building type-safe analytics applications with ClickHouse.
+Collection of examples demonstrating how to use [hypequery](https://github.com/hypequery/hypequery) with different frameworks and architectures for building type-safe analytics applications with ClickHouse.
 
 ## Examples Overview
 
@@ -94,7 +96,7 @@ CLICKHOUSE_PASSWORD=your-password
 
 See `.env.example` in each directory for reference.
 
-## Key Hypequery Concepts Demonstrated
+## Key hypequery Concepts Demonstrated
 
 - **Type-Safe Queries**: End-to-end type safety from database to frontend
 - **Query Definitions**: Declarative query definitions with Zod schemas
@@ -104,10 +106,10 @@ See `.env.example` in each directory for reference.
 
 ## Learn More
 
-- [Hypequery Documentation](https://github.com/hypequery/hypequery)
+- [hypequery Documentation](https://github.com/hypequery/hypequery)
 - [ClickHouse Documentation](https://clickhouse.com/docs)
 - [Zod Validation](https://zod.dev)
 
 ## License
 
-MIT
+Apache 2.0
