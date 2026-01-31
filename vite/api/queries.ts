@@ -4,6 +4,7 @@ import { z } from 'zod';
 
 const { define, queries, query } = initServe({
   context: () => ({}),
+  basePath: '/'
 });
 
 export const api = define({
