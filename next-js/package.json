@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@hypequery/clickhouse": "^1.5.0",
-    "@hypequery/react": "^0.0.1",
-    "@hypequery/serve": "^0.0.2",
+    "@hypequery/react": "^0.0.4",
+    "@hypequery/serve": "^0.0.9",
     "@tanstack/react-query": "^5.90.20",
     "dotenv": "^17.2.3",
     "next": "^15.1.4",

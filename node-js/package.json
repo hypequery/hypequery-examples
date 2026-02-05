@@ -14,14 +14,14 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@hypequery/cli": "^0.0.6",
+    "@hypequery/cli": "^0.0.9",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.9",
     "@hypequery/clickhouse": "^1.5.0",
-    "@hypequery/serve": "^0.0.2",
+    "@hypequery/serve": "^0.0.9",
     "dotenv": "^17.2.3",
     "hono": "^4.11.6"
   }
