@@ -1,0 +1,11 @@
+{
+  "name": "multi-tenant-dashboard-example",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@9.12.3",
+  "scripts": {
+    "dev": "docker-compose up -d && pnpm --filter analytics dev & pnpm --filter dashboard dev",
+    "dev:analytics": "pnpm --filter analytics dev",
+    "dev:dashboard": "pnpm --filter dashboard dev"
+  }
+}

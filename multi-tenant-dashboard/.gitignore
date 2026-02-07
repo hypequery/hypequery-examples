@@ -1,0 +1,8 @@
+node_modules
+.pnpm-debug.log
+.DS_Store
+.next
+out
+dist
+analytics/node_modules
+dashboard/node_modules

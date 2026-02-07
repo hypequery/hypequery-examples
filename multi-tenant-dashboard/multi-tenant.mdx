@@ -1,0 +1,57 @@
+# Multi-tenant dashboard walkthrough
+
+This example demonstrates a tenant-aware analytics service with an admin-only view. Tenant context is resolved from the `x-tenant-key` header and injected into each query.
+
+## Auth flow
+
+The analytics service resolves a tenant key from the request headers and exposes `tenantId` + `role` in context. Tenant queries assert `tenantId` is present, while admin queries assert `role === 'admin'`.
+
+```ts
+const serve = initServe({
+  context: async ({ req }) => {
+    const { tenantId, role } = resolveAuth(req);
+    return { db, tenantId, role };
+  },
+});
+```
+
+## Tenant query
+
+```ts
+activeUsers: query
+  .input(z.object({ region: z.string().optional() }))
+  .query(({ ctx, input }) => {
+    if (!ctx.tenantId) throw new Error('Tenant required');
+    let builder = ctx.db
+      .table('analytics.users')
+      .where('tenant_id', 'eq', ctx.tenantId)
+      .where('status', 'eq', 'active');
+    if (input.region) builder = builder.where('region', 'eq', input.region);
+    return builder
+      .select(['tenant_id'])
+      .count('id', 'active')
+      .groupBy(['tenant_id'])
+      .execute();
+  })
+```
+
+## Admin query
+
+```ts
+revenueByPlan: query
+  .require(({ ctx }) => ctx.role === 'admin')
+  .query(({ ctx }) =>
+    ctx.db
+      .table('analytics.users')
+      .innerJoin('analytics.tenants', 'tenant_id', 'analytics.tenants.tenant_id')
+      .select(['analytics.tenants.plan as plan'])
+      .sum('mrr', 'total_mrr')
+      .groupBy(['plan'])
+      .execute(),
+  )
+```
+
+## UI notes
+
+- The tenant selector stores the key in `localStorage` and reloads to refresh cached requests.
+- The admin page is intentionally unlinked from tenant data so you can validate role checks.
