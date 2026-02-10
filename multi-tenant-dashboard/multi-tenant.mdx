@@ -4,13 +4,20 @@ This example demonstrates a tenant-aware analytics service with an admin-only vi
 
 ## Auth flow
 
-The analytics service resolves a tenant key from the request headers and exposes `tenantId` + `role` in context. Tenant queries assert `tenantId` is present, while admin queries assert `role === 'admin'`.
+The analytics service uses HypeQuery's API key strategy helper so header parsing is handled by the package. Keys are validated into typed auth (`tenant` or `admin`), and tenant context is injected automatically.
 
 ```ts
 const serve = initServe({
-  context: async ({ req }) => {
-    const { tenantId, role } = resolveAuth(req);
-    return { db, tenantId, role };
+  auth: useAuth(
+    createApiKeyStrategy<AppAuth>({
+      header: 'x-tenant-key',
+      validate: (key) => resolveTenantAuth(key),
+    }),
+  ),
+  tenant: {
+    extract: (auth) => auth.tenantId,
+    column: 'tenant_id',
+    mode: 'auto-inject',
   },
 });
 ```

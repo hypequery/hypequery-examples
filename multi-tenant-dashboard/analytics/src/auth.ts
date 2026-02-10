@@ -1,4 +1,4 @@
-import { createAuthSystem } from '@hypequery/serve';
+import { createApiKeyStrategy, createAuthSystem } from '@hypequery/serve';
 import type { AuthStrategy } from '@hypequery/serve';
 
 const TENANT_KEYS = {
@@ -6,6 +6,7 @@ const TENANT_KEYS = {
   globex: process.env.GLOBEX_API_KEY ?? 'globex-demo-key',
   admin: process.env.ADMIN_API_KEY ?? 'admin-demo-key',
 } as const;
+const NO_SCOPES: never[] = [];
 
 export type TenantId = 'acme' | 'globex';
 
@@ -17,30 +18,28 @@ const { useAuth, TypedAuth } = createAuthSystem({
 export type AppAuth = typeof TypedAuth & { tenantId?: TenantId };
 export { useAuth };
 
-export const authStrategy: AuthStrategy<AppAuth> = async ({ request }) => {
-  const headerValue =
-    request.headers?.['x-tenant-key'] ??
-    request.headers?.['X-Tenant-Key'] ??
-    '';
-  const key = Array.isArray(headerValue) ? headerValue[0] : headerValue;
-  const entry = Object.entries(TENANT_KEYS).find(([, value]) => value === key);
+export const authStrategy: AuthStrategy<AppAuth> = createApiKeyStrategy<AppAuth>({
+  header: 'x-tenant-key',
+  validate: (key) => {
+    const entry = Object.entries(TENANT_KEYS).find(([, value]) => value === key);
 
-  if (!entry) return null;
+    if (!entry) return null;
 
-  const [id] = entry;
+    const [id] = entry;
 
-  if (id === 'admin') {
+    if (id === 'admin') {
+      return {
+        userId: 'admin',
+        roles: ['admin'] as const,
+        scopes: NO_SCOPES,
+      };
+    }
+
     return {
-      userId: 'admin',
-      roles: ['admin'],
-      scopes: [],
+      userId: `tenant:${id}`,
+      roles: ['tenant'] as const,
+      scopes: NO_SCOPES,
+      tenantId: id as TenantId,
     };
-  }
-
-  return {
-    userId: `tenant:${id}`,
-    roles: ['tenant'],
-    scopes: [],
-    tenantId: id as TenantId,
-  };
-};
+  },
+});
